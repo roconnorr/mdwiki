@@ -1,0 +1,56 @@
+<html>
+
+<head>
+  <style>
+    .split {
+      height: 100%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .left {
+      left: 0;
+      background-color: #111;
+    }
+
+    .right {
+      right: 0;
+    }
+
+    .preview {
+      text-emphasis-color: '#FFFFFF';
+    }
+  </style>
+</head>
+
+<body>
+  <link rel="stylesheet" href="/vendor/codemirror/codemirror.css">
+  <script src="/vendor/codemirror/codemirror.js"></script>
+  <script src="/vendor/marked/marked.min.js"></script>
+
+  <div class="split left">
+    <textarea id="code" name="code" style="display: none;"></textarea>
+  </div>
+
+  <div class="split right">
+    <div id="preview" name="preview"></div>
+  </div>
+
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true
+    });
+
+    editor.on("change", function (cm) {
+      console.log('change');
+      document.getElementById('preview').innerHTML = marked(cm.getValue());
+    })
+
+  </script>
+</body>
+
+</html>

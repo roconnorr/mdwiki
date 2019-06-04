@@ -6,7 +6,11 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const marked = require('marked');
 
+const path = require('path');
+
 app.use(bodyParser.json());
+
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   fs.readdir('pages', function (err, items) {
@@ -25,5 +29,9 @@ app.get('/pages/:mdFileName', (req, res) => {
     res.send(html);
   });
 });
+
+app.get('/editor', (req, res) => {
+  res.sendFile(path.join(__dirname + '/public/editor.html'));
+})
 
 app.listen(port, () => console.log(`markdown-wiki listening on port ${port}!`));
