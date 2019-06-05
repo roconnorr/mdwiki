@@ -31,7 +31,7 @@ app.get('/pages/:mdFileName', (req, res) => {
 });
 
 app.get('/editor', (req, res) => {
-  res.sendFile(path.join(__dirname + '/public/editor.html'));
+  res.sendFile(path.join(__dirname + '/public/html/editor.html'));
 })
 
 app.listen(port, () => console.log(`markdown-wiki listening on port ${port}!`));
