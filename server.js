@@ -4,14 +4,14 @@ const port = 3000;
 
 const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors')
+const cors = require('cors');
 
 const fs = require('fs');
 const marked = require('marked');
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   fs.readdir('pages', function (err, items) {
