@@ -15,19 +15,27 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   fs.readdir('pages', function (err, items) {
-    const pageLinks = items.map((pageFile) => {
-      const fileName = pageFile.split(".");
-      return `<a href="pages/${fileName[0]}">${pageFile}</a>`;
-    });
-
-    res.send(pageLinks.join('<br>'));
+    if (err) {
+      res.send('FS Error, check pages folder ' + err);
+    } else {
+      const pageLinks = items.map((pageFile) => {
+        const fileName = pageFile.split(".");
+        return `<a href="pages/${fileName[0]}">${pageFile}</a>`;
+      });
+  
+      res.send(pageLinks.join('<br>'));
+    }
   });
 });
 
 app.get('/pages/:mdFileName', (req, res) => {
   fs.readFile(`pages/${req.params.mdFileName}.md`, 'utf8', function (err, contents) {
-    const html = marked(contents);
-    res.send(html);
+    if (err) {
+      res.send('FS Error, check md file' + err);
+    } else {
+      const html = marked(contents);
+      res.send(html);
+    }
   });
 });
 
@@ -42,7 +50,7 @@ app.post('/save', (req, res) => {
       return console.log(err);
     }
 
-    res.send('fucc');
+    res.send('File saved successfully');
     return console.log("The file was saved!");
   });
 });
