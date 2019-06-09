@@ -11,11 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "codemirror": "^5.47.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
-    "marked": "^0.6.1"
+    "marked": "^0.6.2"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
