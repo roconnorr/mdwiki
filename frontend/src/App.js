@@ -2,8 +2,17 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
+import {Editor, EditorState} from 'draft-js';
+
 class App extends Component {
-  state = { pages: [] };
+  constructor(props) {
+    super(props);
+    this.state = {
+      pages: [],
+      editorState: EditorState.createEmpty()
+    };
+    this.onChange = (editorState) => this.setState({editorState});
+  }
 
   fetchPages = () => {
     fetch("/api/pages")
@@ -17,6 +26,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -33,7 +43,9 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </header>          
+        <Editor editorState={this.state.editorState} onChange={this.onChange} />
+
       </div>
     );
   }
