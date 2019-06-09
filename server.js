@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3001;
 
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   fs.readdir('pages', function (err, items) {
     if (err) {
-      res.send('FS Error, check pages folder ' + err);
+      res.status(400).send('FS Error, check pages folder ' + err);
     } else {
       const pageLinks = items.map((pageFile) => {
         const fileName = pageFile.split(".");
@@ -24,6 +24,16 @@ app.get('/', (req, res) => {
       });
   
       res.send(pageLinks.join('<br>'));
+    }
+  });
+});
+
+app.get('/api/pages', (req, res) => {
+  fs.readdir('pages', function (err, items) {
+    if (err) {
+      res.status(400).json({message: 'FS Error, check pages folder ' + err});
+    } else {
+      res.json(items);
     }
   });
 });
