@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 
 import { Editor, EditorState } from 'draft-js';
+import SplitPane from 'react-split-pane';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Editor editorState={this.state.editorState} onChange={this.onChange} />
+        {/* />
 
         <header className="App-header">
 
@@ -39,8 +40,11 @@ class App extends Component {
           >
             Learn React
           </a> */}
-        </header>
-
+        {/* </header> */}
+        <SplitPane split="vertical" defaultSize="50%">
+          <div><Editor editorState={this.state.editorState} onChange={this.onChange}/></div>
+          <div>bn</div>
+        </SplitPane>
       </div>
     );
   }
