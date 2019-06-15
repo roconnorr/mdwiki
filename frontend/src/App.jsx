@@ -42,7 +42,9 @@ class App extends Component {
           </a> */}
         {/* </header> */}
         <SplitPane split="vertical" defaultSize="50%">
-          <div><Editor editorState={this.state.editorState} onChange={this.onChange} /></div>
+          <div>
+            <Editor editorState={this.state.editorState} onChange={this.onChange} />
+          </div>
           <div>bn</div>
         </SplitPane>
       </div>
