@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import './App.css';
 
 import { Editor, EditorState } from 'draft-js';
 import SplitPane from 'react-split-pane';
@@ -9,13 +9,13 @@ class App extends Component {
     super(props);
     this.state = {
       pages: [],
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.createEmpty(),
     };
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = editorState => this.setState({ editorState });
   }
 
   fetchPages = () => {
-    fetch("/api/pages")
+    fetch('/api/pages')
       .then(res => res.json())
       .then(pages => this.setState({ pages }));
   };
@@ -28,7 +28,7 @@ class App extends Component {
         <header className="App-header">
 
           <button onClick={this.fetchPages}>Get Pages</button>
-          
+
           {this.state.pages.map(page => (
             <p>{page}</p>
           ))}
@@ -42,7 +42,7 @@ class App extends Component {
           </a> */}
         {/* </header> */}
         <SplitPane split="vertical" defaultSize="50%">
-          <div><Editor editorState={this.state.editorState} onChange={this.onChange}/></div>
+          <div><Editor editorState={this.state.editorState} onChange={this.onChange} /></div>
           <div>bn</div>
         </SplitPane>
       </div>
