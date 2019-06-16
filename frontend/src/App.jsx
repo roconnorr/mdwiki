@@ -15,6 +15,8 @@ class App extends Component {
       pages: [],
       textContent: '',
     };
+
+    this.editorRef = React.createRef();
   }
 
   fetchPages = () => {
@@ -27,14 +29,23 @@ class App extends Component {
     this.setState({ textContent: content });
   };
 
+  onEditorClick = () => {
+    this.editorRef.current.focus();
+  };
+
   render() {
     const { textContent } = this.state;
     return (
       <div className="App">
         <PageHeader title="edit me" />
         <SplitPane split="vertical" defaultSize="50%">
-          <div>
-            <Editor onChange={this.onEditorChange} />
+          <div
+            className="EditorContainer"
+            role="presentation"
+            onClick={this.onEditorClick}
+            onKeyDown={this.onEditorClick}
+          >
+            <Editor onChange={this.onEditorChange} ref={this.editorRef} />
           </div>
           <div>
             <Preview content={textContent} />

@@ -68,3 +68,7 @@
 .Resizer.disabled:hover {
   border-color: transparent;
 }
+
+.EditorContainer {
+  height: 100%;
+}
