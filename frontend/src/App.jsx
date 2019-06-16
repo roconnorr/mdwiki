@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
+import { PageHeader } from 'antd';
 
 import './App.css';
+import 'antd/dist/antd.css';
 
 import Editor from './components/editor/Editor';
 import Preview from './components/preview/Preview';
@@ -29,6 +31,7 @@ class App extends Component {
     const { textContent } = this.state;
     return (
       <div className="App">
+        <PageHeader title="edit me" />
         <SplitPane split="vertical" defaultSize="50%">
           <div>
             <Editor onChange={this.onEditorChange} />
