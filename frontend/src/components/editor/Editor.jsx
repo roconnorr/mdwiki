@@ -23,13 +23,19 @@ class Editor extends Component {
     const { editorState } = this.state;
     const { innerRef } = this.props;
     return (
-      <DraftJsEditor editorState={editorState} onChange={this.onEditorChange} ref={innerRef} />
+      <DraftJsEditor
+        editorState={editorState}
+        onChange={this.onEditorChange}
+        ref={innerRef}
+        textAlignment="left"
+      />
     );
   }
 }
 
 Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
+  innerRef: PropTypes.object.isRequired,
 };
 
 export default React.forwardRef((props, ref) => <Editor innerRef={ref} {...props} />);
