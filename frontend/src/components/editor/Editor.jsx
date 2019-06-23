@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Editor.css';
 
-import { Editor as DraftJsEditor, EditorState } from 'draft-js';
+import { ContentState, Editor as DraftJsEditor, EditorState } from 'draft-js';
 
 class Editor extends Component {
   constructor(props) {
     super(props);
+
+    // load previous session content, use it to create an editorstate
+    const savedContent = localStorage.getItem('textcontent');
+    const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState,
     };
+
+    // trigger onchange to populate preview
+    this.onEditorChange(editorState);
   }
 
   onEditorChange = (editorState) => {
     const { onChange } = this.props;
     const text = editorState.getCurrentContent().getPlainText();
     onChange(text);
+    localStorage.setItem('textcontent', text);
     this.setState({ editorState });
   };
 
