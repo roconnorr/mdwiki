@@ -53,7 +53,7 @@ class App extends Component {
           >
             <Editor onChange={this.onEditorChange} ref={this.editorRef} />
           </div>
-          <div>
+          <div className="PreviewContainer">
             <Preview content={textContent} />
           </div>
         </SplitPane>
