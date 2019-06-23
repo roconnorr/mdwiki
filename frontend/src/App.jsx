@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
-import { PageHeader } from 'antd';
+import { Alignment, Button, Navbar } from '@blueprintjs/core';
 
 import './App.css';
-import 'antd/dist/antd.css';
 
 import Editor from './components/editor/Editor';
 import Preview from './components/preview/Preview';
@@ -37,7 +36,14 @@ class App extends Component {
     const { textContent } = this.state;
     return (
       <div className="App">
-        <PageHeader title="edit me" />
+        <Navbar>
+          <Navbar.Group align={Alignment.LEFT}>
+            <Navbar.Heading>MdWiki</Navbar.Heading>
+            <Navbar.Divider />
+            <Button className="bp3-minimal" icon="home" text="Home" />
+            <Button className="bp3-minimal" icon="document" text="Files" />
+          </Navbar.Group>
+        </Navbar>
         <SplitPane split="vertical" defaultSize="50%">
           <div
             className="EditorContainer"

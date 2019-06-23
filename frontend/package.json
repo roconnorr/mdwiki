@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.19.3",
+    "@blueprintjs/core": "^3.16.2",
     "draft-js": "^0.10.5",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
