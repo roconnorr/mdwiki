@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
 import { Alignment, Button, Navbar } from '@blueprintjs/core';
 
 import './App.css';
 
 import Editor from './components/editor/Editor';
-import Preview from './components/preview/Preview';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pages: [],
-      textContent: '',
     };
 
     this.editorRef = React.createRef();
@@ -24,16 +21,11 @@ class App extends Component {
       .then(pages => this.setState({ pages }));
   };
 
-  onEditorChange = (content) => {
-    this.setState({ textContent: content });
-  };
-
   onEditorClick = () => {
     this.editorRef.current.focus();
   };
 
   render() {
-    const { textContent } = this.state;
     return (
       <div className="App">
         <Navbar>
@@ -44,19 +36,8 @@ class App extends Component {
             <Button className="bp3-minimal" icon="document" text="Files" />
           </Navbar.Group>
         </Navbar>
-        <SplitPane split="vertical" defaultSize="50%">
-          <div
-            className="EditorContainer"
-            role="presentation"
-            onClick={this.onEditorClick}
-            onKeyDown={this.onEditorClick}
-          >
-            <Editor onChange={this.onEditorChange} ref={this.editorRef} />
-          </div>
-          <div className="PreviewContainer">
-            <Preview content={textContent} />
-          </div>
-        </SplitPane>
+
+        <Editor ref={this.editorRef} onEditorClick={this.onEditorClick} />
       </div>
     );
   }

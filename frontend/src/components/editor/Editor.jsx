@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ContentState, Editor as DraftJsEditor, EditorState } from 'draft-js';
+import SplitPane from 'react-split-pane';
+
 import './Editor.css';
 
-import { ContentState, Editor as DraftJsEditor, EditorState } from 'draft-js';
+import Preview from '../preview/Preview';
 
 class Editor extends Component {
   constructor(props) {
@@ -13,6 +16,7 @@ class Editor extends Component {
     const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
     this.state = {
       editorState,
+      editorPlainText: editorState.getCurrentContent().getPlainText(),
     };
 
     // trigger onchange to populate preview
@@ -20,29 +24,39 @@ class Editor extends Component {
   }
 
   onEditorChange = (editorState) => {
-    const { onChange } = this.props;
     const text = editorState.getCurrentContent().getPlainText();
-    onChange(text);
     localStorage.setItem('textcontent', text);
-    this.setState({ editorState });
+    this.setState({ editorState, editorPlainText: text });
   };
 
   render() {
-    const { editorState } = this.state;
-    const { innerRef } = this.props;
+    const { editorState, editorPlainText } = this.state;
+    const { innerRef, onEditorClick } = this.props;
     return (
-      <DraftJsEditor
-        editorState={editorState}
-        onChange={this.onEditorChange}
-        ref={innerRef}
-        textAlignment="left"
-      />
+      <SplitPane split="vertical" defaultSize="50%">
+        <div
+          className="EditorContainer"
+          role="presentation"
+          onClick={onEditorClick}
+          onKeyDown={onEditorClick}
+        >
+          <DraftJsEditor
+            editorState={editorState}
+            onChange={this.onEditorChange}
+            ref={innerRef}
+            textAlignment="left"
+          />
+        </div>
+        <div className="PreviewContainer">
+          <Preview content={editorPlainText} editorRef={innerRef} />
+        </div>
+      </SplitPane>
     );
   }
 }
 
 Editor.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  onEditorClick: PropTypes.func.isRequired,
   innerRef: PropTypes.object.isRequired,
 };
 
