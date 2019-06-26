@@ -9,7 +9,7 @@ class Editor extends Component {
     super(props);
 
     // load previous session content, use it to create an editorstate
-    const savedContent = localStorage.getItem('textcontent');
+    const savedContent = localStorage.getItem('textcontent') || '';
     const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
     this.state = {
       editorState,
