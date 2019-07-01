@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   fetchPages = () => {
-    fetch('/api/pages')
+    fetch('http://localhost:8080/api/pages')
       .then(res => res.json())
       .then(pages => this.setState({ pages }));
   };
