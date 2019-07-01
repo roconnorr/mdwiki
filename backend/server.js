@@ -3,7 +3,6 @@ const app = express();
 const port = 8080;
 
 const bodyParser = require("body-parser");
-const path = require("path");
 const cors = require("cors");
 
 const fs = require("fs");
@@ -14,7 +13,6 @@ const client = redis.createClient(process.env.REDIS_URL);
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   fs.readdir("pages", function(err, items) {
@@ -53,10 +51,6 @@ app.get("/pages/:mdFileName", (req, res) => {
       res.send(html);
     }
   });
-});
-
-app.get("/editor", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/html/editor.html"));
 });
 
 app.post("/save", (req, res) => {
