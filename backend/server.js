@@ -9,6 +9,9 @@ const cors = require("cors");
 const fs = require("fs");
 const marked = require("marked");
 
+const redis = require("redis");
+const client = redis.createClient(process.env.REDIS_URL);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("public"));

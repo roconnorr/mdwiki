@@ -12,7 +12,7 @@ COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm install
 
-# copy frontend app files
+# copy backend app files
 COPY . /app
 
 CMD ["npm", "start"]

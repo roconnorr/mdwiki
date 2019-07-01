@@ -14,7 +14,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
-    "marked": "^0.6.2"
+    "marked": "^0.6.2",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
