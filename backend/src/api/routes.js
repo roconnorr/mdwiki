@@ -8,6 +8,6 @@ router.get("/page", page_controller.page_list);
 
 router.get("/page/:pageId", page_controller.page_detail);
 
-router.post("/page/:pageId", page_controller.page_create);
+router.post("/page", page_controller.page_create);
 
 module.exports = router;
