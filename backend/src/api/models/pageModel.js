@@ -59,8 +59,22 @@ class Page {
     });
   }
 
-  async getById() {
+  static async getById(id) {
     console.log("get from redis");
+  }
+
+  static async getAll() {
+    // get keys of all pages
+    const keys = await redisClient.keys("page*");
+
+    // get all page objects
+    const multi = redisClient.multi();
+    keys.forEach(key => multi.hgetall(key));
+    const results = await multi.exec();
+
+    // remove null objects from array where errors would be
+    // TODO error handling here
+    return results.map(result => result[1]);
   }
 }
 

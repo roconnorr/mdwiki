@@ -2,14 +2,9 @@ const fs = require("fs");
 
 const { Page } = require("../models/pageModel");
 
-exports.page_list = function(req, res) {
-  fs.readdir("pages", function(err, items) {
-    if (err) {
-      res.status(400).json({ error: "FS Error, check pages folder " + err });
-    } else {
-      res.status(200).json(items);
-    }
-  });
+exports.page_list = async function(req, res) {
+  const pages = await Page.getAll();
+  res.status(200).json(pages);
 };
 
 exports.page_detail = function(req, res) {
