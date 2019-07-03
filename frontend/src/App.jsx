@@ -22,6 +22,7 @@ class App extends Component {
       pages: [],
       isSaving: false,
       pageTitle: '',
+      selectedPageId: '',
     };
 
     this.editorRef = React.createRef();
@@ -90,18 +91,25 @@ class App extends Component {
 
   onMenuItemClicked = (e) => {
     // also: update editor and preview
-    this.setState({ pageTitle: e.label });
+    this.setState({ pageTitle: e.label, selectedPageId: e.id });
   };
 
   render() {
-    const { isSaving, pageTitle, pages } = this.state;
+    const {
+      isSaving, pageTitle, pages, selectedPageId,
+    } = this.state;
+
     return (
       <div className="App">
         <Navbar>
           <Navbar.Group align={Alignment.LEFT}>
             <Popover>
               <Button className="bp3-minimal" icon="menu" />
-              <Menu pages={pages} onMenuItemClicked={this.onMenuItemClicked} />
+              <Menu
+                pages={pages}
+                onMenuItemClicked={this.onMenuItemClicked}
+                selectedPageId={selectedPageId}
+              />
             </Popover>
             <Navbar.Divider />
             <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>

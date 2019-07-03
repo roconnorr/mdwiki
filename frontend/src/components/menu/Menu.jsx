@@ -9,8 +9,8 @@ const treeItem = {
   icon: 'document',
 };
 
-const Menu = ({ pages, onMenuItemClicked }) => {
-  const [selectedId, setSelectedId] = useState('');
+const Menu = ({ pages, onMenuItemClicked, selectedPageId }) => {
+  const [selectedId, setSelectedId] = useState(selectedPageId);
 
   const onClick = (e) => {
     setSelectedId(e.id);
@@ -30,6 +30,7 @@ const Menu = ({ pages, onMenuItemClicked }) => {
 Menu.propTypes = {
   pages: PropTypes.array.isRequired,
   onMenuItemClicked: PropTypes.func.isRequired,
+  selectedPageId: PropTypes.string.isRequired,
 };
 
 export default Menu;
