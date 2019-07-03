@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Alignment, Button, Navbar, Spinner, Toaster, Intent,
+  Alignment, Button, Navbar, Spinner, Toaster, Intent, Popover,
 } from '@blueprintjs/core';
 
 import './App.css';
 
 import Editor from './components/editor/Editor';
+import Menu from './components/menu/Menu';
 
 class App extends Component {
   constructor(props) {
@@ -72,9 +73,13 @@ class App extends Component {
       <div className="App">
         <Navbar>
           <Navbar.Group align={Alignment.LEFT}>
-            <Navbar.Heading>MdWiki</Navbar.Heading>
+            <Popover>
+              <Button className="bp3-minimal" icon="menu" onClick={this.showHideMenu} />
+              <Menu />
+            </Popover>
             <Navbar.Divider />
-            <Button className="bp3-minimal" icon="home" text="Home" />
+            <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>
+            <Navbar.Divider />
             <Button
               className="bp3-minimal"
               icon={isSaving ? <Spinner size={16} /> : 'document'}
