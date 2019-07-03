@@ -88,6 +88,11 @@ class App extends Component {
     this.setState({ pageTitle: e.target.value });
   };
 
+  onMenuItemClicked = (e) => {
+    // also: update editor and preview
+    this.setState({ pageTitle: e.label });
+  };
+
   render() {
     const { isSaving, pageTitle, pages } = this.state;
     return (
@@ -96,7 +101,7 @@ class App extends Component {
           <Navbar.Group align={Alignment.LEFT}>
             <Popover>
               <Button className="bp3-minimal" icon="menu" onClick={this.showHideMenu} />
-              <Menu pages={pages} />
+              <Menu pages={pages} onMenuItemClicked={this.onMenuItemClicked} />
             </Popover>
             <Navbar.Divider />
             <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>
