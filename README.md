@@ -10,10 +10,13 @@ To get a shell in a container run `docker-compose exec {frontend/backend} sh`
 
 ### TODO
 
-- [ ] clicking menu loads content and selects menuitem
+- [x] clicking menu loads content and selects menuitem
 - [ ] saving loaded content patches existing content
-- [ ] editor style and tools
 - [ ] refactor localstorage use
+- [ ] auto close menu on click
+- [ ] clicking checkbox in preview updates editor
+- [ ] store last updated time and order menu by it
+- [ ] editor style and tools
 - [ ] autosave
 - [ ] kb shortcuts
 - [ ] style and polish

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ContentState, Editor as DraftJsEditor, EditorState } from 'draft-js';
+import { Editor as DraftJsEditor } from 'draft-js';
 import SplitPane from 'react-split-pane';
 
 import './Editor.css';
@@ -11,27 +11,19 @@ class Editor extends Component {
   constructor(props) {
     super(props);
 
-    // load previous session content, use it to create an editorstate
-    const savedContent = localStorage.getItem('textcontent') || '';
-    const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
-    this.state = {
-      editorState,
-      editorPlainText: editorState.getCurrentContent().getPlainText(),
-    };
-
     // trigger onchange to populate preview
-    this.onEditorChange(editorState);
+    this.onEditorChange(props.editorState);
   }
 
   onEditorChange = (editorState) => {
-    const text = editorState.getCurrentContent().getPlainText();
-    localStorage.setItem('textcontent', text);
-    this.setState({ editorState, editorPlainText: text });
+    const { onEditorChange } = this.props;
+    onEditorChange(editorState);
   };
 
   render() {
-    const { editorState, editorPlainText } = this.state;
-    const { innerRef, onEditorClick } = this.props;
+    const {
+      innerRef, onEditorClick, editorState, editorPlainText,
+    } = this.props;
     return (
       <SplitPane split="vertical" defaultSize="50%">
         <div
@@ -58,6 +50,9 @@ class Editor extends Component {
 Editor.propTypes = {
   onEditorClick: PropTypes.func.isRequired,
   innerRef: PropTypes.object.isRequired,
+  onEditorChange: PropTypes.func.isRequired,
+  editorState: PropTypes.object.isRequired,
+  editorPlainText: PropTypes.string.isRequired,
 };
 
 export default React.forwardRef((props, ref) => <Editor innerRef={ref} {...props} />);

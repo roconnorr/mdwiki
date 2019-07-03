@@ -9,6 +9,7 @@ import {
   Popover,
   InputGroup,
 } from '@blueprintjs/core';
+import { ContentState, EditorState } from 'draft-js';
 
 import './App.css';
 
@@ -18,11 +19,18 @@ import Menu from './components/menu/Menu';
 class App extends Component {
   constructor(props) {
     super(props);
+
+    // load previous session content, use it to create an editorstate
+    const savedContent = localStorage.getItem('textcontent') || '';
+    const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
+
     this.state = {
       pages: [],
       isSaving: false,
       pageTitle: '',
       selectedPageId: '',
+      editorState,
+      editorPlainText: editorState.getCurrentContent().getPlainText(),
     };
 
     this.editorRef = React.createRef();
@@ -85,18 +93,28 @@ class App extends Component {
     this.editorRef.current.focus();
   };
 
+  onEditorChange = (editorState) => {
+    const text = editorState.getCurrentContent().getPlainText();
+    this.setState({ editorState, editorPlainText: text });
+  };
+
   onTitleChange = (e) => {
     this.setState({ pageTitle: e.target.value });
   };
 
   onMenuItemClicked = (e) => {
-    // also: update editor and preview
-    this.setState({ pageTitle: e.label, selectedPageId: e.id });
+    const { pages } = this.state;
+
+    const newPageContent = pages.find(page => page.id === e.id).content;
+
+    const editorState = EditorState.createWithContent(ContentState.createFromText(newPageContent));
+    this.setState({ pageTitle: e.label, selectedPageId: e.id, editorState });
+    this.onEditorChange(editorState);
   };
 
   render() {
     const {
-      isSaving, pageTitle, pages, selectedPageId,
+      editorState, editorPlainText, isSaving, pageTitle, pages, selectedPageId,
     } = this.state;
 
     return (
@@ -125,7 +143,13 @@ class App extends Component {
           </Navbar.Group>
         </Navbar>
 
-        <Editor ref={this.editorRef} onEditorClick={this.onEditorClick} />
+        <Editor
+          ref={this.editorRef}
+          onEditorClick={this.onEditorClick}
+          onEditorChange={this.onEditorChange}
+          editorState={editorState}
+          editorPlainText={editorPlainText}
+        />
       </div>
     );
   }
