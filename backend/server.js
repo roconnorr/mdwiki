@@ -6,15 +6,25 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const redis = require("redis");
-const client = redis.createClient(process.env.REDIS_URL);
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
-// import routes
-const routes = require("./src/api/routes");
+redisClient.on("connect", () => {
+  console.log("Redis client connected");
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+  // import routes
+  const routes = require("./src/api/routes");
 
-app.use("/api", routes);
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
 
-app.listen(port, () => console.log(`markdown-wiki listening on port ${port}!`));
+  app.use("/api", routes);
+
+  app.listen(port, () =>
+    console.log(`markdown-wiki listening on port ${port}!`)
+  );
+});
+
+redisClient.on("error", err => {
+  console.error("Error connecting to redis, server not started! " + err);
+});
