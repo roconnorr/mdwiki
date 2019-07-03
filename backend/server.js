@@ -8,6 +8,10 @@ const cors = require("cors");
 const redis = require("redis");
 const redisClient = redis.createClient(process.env.REDIS_URL);
 
+// pass redis client to models
+const pageModel = require("./src/api/models/pageModel");
+pageModel.setRedisClient(redisClient);
+
 redisClient.on("connect", () => {
   console.log("Redis client connected");
 
