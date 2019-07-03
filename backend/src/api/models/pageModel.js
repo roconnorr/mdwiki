@@ -1,10 +1,12 @@
+const uuidv4 = require("uuid/v4");
+
 let redisClient;
 
 module.exports.setRedisClient = client => (redisClient = client);
 
 class Page {
   constructor(name, content) {
-    this.id = "asdf"; //uuid me
+    this.id = uuidv4();
     this.name = name;
     this.content = content;
   }
