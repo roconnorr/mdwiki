@@ -100,7 +100,7 @@ class App extends Component {
         <Navbar>
           <Navbar.Group align={Alignment.LEFT}>
             <Popover>
-              <Button className="bp3-minimal" icon="menu" onClick={this.showHideMenu} />
+              <Button className="bp3-minimal" icon="menu" />
               <Menu pages={pages} onMenuItemClicked={this.onMenuItemClicked} />
             </Popover>
             <Navbar.Divider />
