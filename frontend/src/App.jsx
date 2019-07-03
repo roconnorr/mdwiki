@@ -27,10 +27,15 @@ class App extends Component {
     this.editorRef = React.createRef();
   }
 
-  fetchPages = () => {
-    fetch('http://localhost:8080/api/page')
-      .then(res => res.json())
-      .then(pages => this.setState({ pages }));
+  componentDidMount() {
+    this.fetchPages();
+  }
+
+  fetchPages = async () => {
+    const response = await fetch('http://localhost:8080/api/page');
+    const data = await response.json();
+    console.log(data);
+    this.setState({ pages: data });
   };
 
   savePage = async () => {
@@ -82,14 +87,14 @@ class App extends Component {
   };
 
   render() {
-    const { isSaving, pageTitle } = this.state;
+    const { isSaving, pageTitle, pages } = this.state;
     return (
       <div className="App">
         <Navbar>
           <Navbar.Group align={Alignment.LEFT}>
             <Popover>
               <Button className="bp3-minimal" icon="menu" onClick={this.showHideMenu} />
-              <Menu />
+              <Menu pages={pages} />
             </Popover>
             <Navbar.Divider />
             <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>

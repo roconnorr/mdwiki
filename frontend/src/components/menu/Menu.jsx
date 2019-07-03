@@ -1,17 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tree } from '@blueprintjs/core';
 
 import './Menu.css';
 
-const INITIAL_STATE = [
-  {
-    id: 0,
-    hasCaret: true,
-    icon: 'folder-close',
-    label: 'Folder 0',
-  },
-];
+const treeItem = {
+  hasCaret: false,
+  icon: 'document',
+};
 
-const Menu = () => <Tree contents={INITIAL_STATE} />;
+const Menu = ({ pages }) => {
+  const data = pages.map(page => ({ id: page.id, label: page.name, ...treeItem }));
+  return <Tree contents={data} />;
+};
+
+Menu.propTypes = {
+  pages: PropTypes.array.isRequired,
+};
 
 export default Menu;
