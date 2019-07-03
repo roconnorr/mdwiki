@@ -29,8 +29,17 @@ class Page {
 
     //Save Page to Redis
     redisClient.hmset(
-      `post:${this.id}`,
-      [this.id, this.name, this.fileName, this.content],
+      `page:${this.id}`,
+      [
+        "id",
+        this.id,
+        "name",
+        this.name,
+        "fileName",
+        this.fileName,
+        "content",
+        this.content
+      ],
       (err, res) => {
         if (err) {
           console.log(`Error saving page to redis ${err}`);

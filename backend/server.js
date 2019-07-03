@@ -5,8 +5,8 @@ const port = 8080;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-const redis = require("redis");
-const redisClient = redis.createClient(process.env.REDIS_URL);
+const redis = require("ioredis");
+const redisClient = new redis(process.env.REDIS_URL);
 
 // pass redis client to models
 const pageModel = require("./src/api/models/pageModel");
