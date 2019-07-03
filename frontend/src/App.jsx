@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Alignment, Button, Navbar, Spinner, Toaster, Intent, Popover,
+  Alignment,
+  Button,
+  Navbar,
+  Spinner,
+  Toaster,
+  Intent,
+  Popover,
+  InputGroup,
 } from '@blueprintjs/core';
 
 import './App.css';
@@ -14,6 +21,7 @@ class App extends Component {
     this.state = {
       pages: [],
       isSaving: false,
+      pageTitle: '',
     };
 
     this.editorRef = React.createRef();
@@ -26,13 +34,15 @@ class App extends Component {
   };
 
   savePage = async () => {
+    const { pageTitle } = this.state;
+
     // temp refhax for testing
     const editorContent = this.editorRef.current.editor.innerText;
 
     this.setState({ isSaving: true });
     const response = await fetch('http://localhost:8080/api/page', {
       method: 'POST',
-      body: JSON.stringify({ content: editorContent }),
+      body: JSON.stringify({ name: pageTitle, content: editorContent }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -67,8 +77,12 @@ class App extends Component {
     this.editorRef.current.focus();
   };
 
+  onTitleChange = (e) => {
+    this.setState({ pageTitle: e.target.value });
+  };
+
   render() {
-    const { isSaving } = this.state;
+    const { isSaving, pageTitle } = this.state;
     return (
       <div className="App">
         <Navbar>
@@ -79,6 +93,8 @@ class App extends Component {
             </Popover>
             <Navbar.Divider />
             <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>
+            <Navbar.Divider />
+            <InputGroup placeholder="Name" value={pageTitle} onChange={this.onTitleChange} />
             <Navbar.Divider />
             <Button
               className="bp3-minimal"
