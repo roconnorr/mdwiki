@@ -1,5 +1,7 @@
 const fs = require("fs");
 
+const { Page } = require("../models/pageModel");
+
 exports.page_list = function(req, res) {
   fs.readdir("pages", function(err, items) {
     if (err) {
@@ -20,14 +22,17 @@ exports.page_detail = function(req, res) {
   });
 };
 
-exports.page_create = function(req, res) {
-  fs.writeFile("pages/testy2.md", req.body.content, err => {
-    if (err) {
-      res.status(400).json({ error: err });
-      console.log(err);
-    } else {
-      res.status(201).json({ message: "File created successfully" });
-      console.log("The file was saved!");
-    }
-  });
+exports.page_create = async function(req, res) {
+  const { name, content } = req.body;
+
+  // create and save page model
+  const newPage = new Page(name, content);
+
+  try {
+    await newPage.save();
+    res.status(201).json({ message: "Page created successfully" });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ error: e });
+  }
 };
