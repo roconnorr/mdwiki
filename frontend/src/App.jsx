@@ -62,7 +62,7 @@ class App extends Component {
           message: 'Saved Successfully!',
           timeout: 3000,
         });
-      }, 500);
+      }, 250);
     } else {
       const data = await response.json();
       console.log(data);
@@ -74,8 +74,10 @@ class App extends Component {
           message: 'Saving was not successful.',
           timeout: 3000,
         });
-      }, 500);
+      }, 250);
     }
+
+    this.fetchPages();
   };
 
   onEditorClick = () => {
