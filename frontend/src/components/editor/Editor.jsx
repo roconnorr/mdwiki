@@ -25,7 +25,7 @@ class Editor extends Component {
       innerRef, onEditorClick, editorState, editorPlainText,
     } = this.props;
     return (
-      <SplitPane split="vertical" defaultSize="50%">
+      <SplitPane split="vertical" defaultSize="50%" className="SplitPane">
         <div
           className="EditorContainer"
           role="presentation"

@@ -118,7 +118,7 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="App">
+      <div className="App bp3-dark">
         <Navbar>
           <Navbar.Group align={Alignment.LEFT}>
             <Popover>
