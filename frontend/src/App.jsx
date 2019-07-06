@@ -98,6 +98,10 @@ class App extends Component {
     this.setState({ editorState, editorPlainText: text });
   };
 
+  pushNewEditorState = (editorState, contentState) => {
+    this.onEditorChange(EditorState.push(editorState, contentState));
+  }
+
   onTitleChange = (e) => {
     this.setState({ pageTitle: e.target.value });
   };
@@ -149,6 +153,7 @@ class App extends Component {
           onEditorChange={this.onEditorChange}
           editorState={editorState}
           editorPlainText={editorPlainText}
+          pushNewEditorState={this.pushNewEditorState}
         />
       </div>
     );

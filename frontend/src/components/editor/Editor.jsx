@@ -40,7 +40,12 @@ class Editor extends Component {
           />
         </div>
         <div className="PreviewContainer">
-          <Preview content={editorPlainText} editorRef={innerRef} />
+          <Preview
+            content={editorPlainText}
+            editorRef={innerRef}
+            editorState={editorState}
+            pushNewEditorState={this.props.pushNewEditorState}
+          />
         </div>
       </SplitPane>
     );
