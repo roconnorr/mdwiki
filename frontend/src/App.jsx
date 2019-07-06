@@ -1,39 +1,22 @@
 import React, { Component } from 'react';
-import {
-  Alignment,
-  Button,
-  Navbar,
-  Spinner,
-  Toaster,
-  Intent,
-  Popover,
-  InputGroup,
-} from '@blueprintjs/core';
+import { Toaster, Intent } from '@blueprintjs/core';
 import { ContentState, EditorState } from 'draft-js';
 
 import './App.css';
 
-import Editor from './components/editor/Editor';
-import Menu from './components/menu/Menu';
+import AppHeader from './components/appheader/AppHeader';
+import EditorContainer from './components/editor/editorcontainer/EditorContainer';
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-    // load previous session content, use it to create an editorstate
-    const savedContent = localStorage.getItem('textcontent') || '';
-    const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
 
     this.state = {
       pages: [],
       isSaving: false,
       pageTitle: '',
       selectedPageId: '',
-      editorState,
-      editorPlainText: editorState.getCurrentContent().getPlainText(),
     };
-
-    this.editorRef = React.createRef();
   }
 
   componentDidMount() {
@@ -89,19 +72,6 @@ class App extends Component {
     this.fetchPages();
   };
 
-  onEditorClick = () => {
-    this.editorRef.current.focus();
-  };
-
-  onEditorChange = (editorState) => {
-    const text = editorState.getCurrentContent().getPlainText();
-    this.setState({ editorState, editorPlainText: text });
-  };
-
-  pushNewEditorState = (editorState, contentState) => {
-    this.onEditorChange(EditorState.push(editorState, contentState));
-  }
-
   onTitleChange = (e) => {
     this.setState({ pageTitle: e.target.value });
   };
@@ -118,43 +88,22 @@ class App extends Component {
 
   render() {
     const {
-      editorState, editorPlainText, isSaving, pageTitle, pages, selectedPageId,
+      isSaving, pageTitle, pages, selectedPageId,
     } = this.state;
 
     return (
       <div className="App bp3-dark">
-        <Navbar>
-          <Navbar.Group align={Alignment.LEFT}>
-            <Popover>
-              <Button className="bp3-minimal" icon="menu" />
-              <Menu
-                pages={pages}
-                onMenuItemClicked={this.onMenuItemClicked}
-                selectedPageId={selectedPageId}
-              />
-            </Popover>
-            <Navbar.Divider />
-            <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>
-            <Navbar.Divider />
-            <InputGroup placeholder="Name" value={pageTitle} onChange={this.onTitleChange} />
-            <Navbar.Divider />
-            <Button
-              className="bp3-minimal"
-              icon={isSaving ? <Spinner size={16} /> : 'document'}
-              text="Save"
-              onClick={this.savePage}
-            />
-          </Navbar.Group>
-        </Navbar>
-
-        <Editor
-          ref={this.editorRef}
-          onEditorClick={this.onEditorClick}
-          onEditorChange={this.onEditorChange}
-          editorState={editorState}
-          editorPlainText={editorPlainText}
-          pushNewEditorState={this.pushNewEditorState}
+        <AppHeader
+          isSaving={isSaving}
+          pageTitle={pageTitle}
+          pages={pages}
+          selectedPageId={selectedPageId}
+          onSavePage={this.onSavePage}
+          onMenuItemClicked={this.onMenuItemClicked}
+          onTitleChange={this.onTitleChange}
         />
+
+        <EditorContainer />
       </div>
     );
   }
