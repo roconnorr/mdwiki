@@ -13,8 +13,9 @@ To get a shell in a container run `docker-compose exec {frontend/backend} sh`
 - [x] clicking menu loads content and selects menuitem
 - [ ] saving loaded content patches existing content
 - [ ] refactor localstorage use
+- [ ] make pages folder map to host folder in backend dockerfile
 - [ ] auto close menu on click
-- [ ] clicking checkbox in preview updates editor
+- [x] clicking checkbox in preview updates editor
 - [ ] store last updated time and order menu by it
 - [ ] editor style and tools
 - [ ] autosave
