@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { ContentState, EditorState } from 'draft-js';
+
+import { updateEditorState } from '../../../redux/modules/editor';
 
 import Editor from '../Editor';
 
@@ -12,7 +16,6 @@ class EditorContainer extends Component {
     const editorState = EditorState.createWithContent(ContentState.createFromText(savedContent));
 
     this.state = {
-      editorState,
       editorPlainText: editorState.getCurrentContent().getPlainText(),
     };
 
@@ -24,8 +27,10 @@ class EditorContainer extends Component {
   };
 
   onEditorChange = (editorState) => {
+    const { updateEditor } = this.props;
+    updateEditor(editorState);
     const text = editorState.getCurrentContent().getPlainText();
-    this.setState({ editorState, editorPlainText: text });
+    this.setState({ editorPlainText: text });
   };
 
   pushNewEditorState = (editorState, contentState) => {
@@ -33,7 +38,8 @@ class EditorContainer extends Component {
   };
 
   render() {
-    const { editorState, editorPlainText } = this.state;
+    const { editorPlainText } = this.state;
+    const { editorState } = this.props;
 
     return (
       <Editor
@@ -48,4 +54,13 @@ class EditorContainer extends Component {
   }
 }
 
-export default EditorContainer;
+const mapStateToProps = state => ({
+  editorState: state.editor.editorState,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ updateEditor: updateEditorState }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditorContainer);

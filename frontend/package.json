@@ -9,8 +9,10 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.0.8",
+    "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
-    "react-split-pane": "^0.1.87"
+    "react-split-pane": "^0.1.87",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -18,7 +20,8 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0"
+    "eslint-plugin-react": "^7.13.0",
+    "redux-devtools-extension": "^2.13.8"
   },
   "scripts": {
     "start": "react-scripts start",
