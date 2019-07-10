@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
-import {EditorState, Modifier, SelectionState} from 'draft-js';
+import { EditorState, Modifier, SelectionState } from 'draft-js';
 
 import { updateEditorState } from '../../redux/modules/editor';
 
@@ -13,26 +13,20 @@ import './Preview.css';
 
 let checkboxIdCounter = 0;
 
-const Preview = ({
-  content, editorContent, editorState, updateEditor,
-}) => {
+const Preview = ({ editorContent, editorState, updateEditor }) => {
   const onCheckboxClick = (event, checkboxId) => {
     const clickSourcePos = document
       .getElementById(checkboxId)
       .parentElement.getAttribute('data-sourcepos');
 
-    const split1 = clickSourcePos.split('-');
-    const startLine = split1[0].split(':')[0];
-    // TODO: Refactor, use draftjs functionality throughout
-    // const editorText = editorRef.current.editor.innerText;
-
+    const sourcePositions = clickSourcePos.split('-');
+    const startLine = sourcePositions[0].split(':')[0];
     const lines = editorContent.split('\n');
-
-    const line = lines[parseInt(startLine - 1, 10)];
+    const checkBoxLine = lines[parseInt(startLine - 1, 10)];
 
     // "- [ ]" finding regex:
     // https://github.com/hackmdio/codimd/blob/4e596d724dcb1a5a19ab1e75df250767334ebfc9/public/js/extra.js#L704
-    const matches = line.match(/^[>\s-]*[-+*]\s\[([x ])\]/);
+    const matches = checkBoxLine.match(/^[>\s-]*[-+*]\s\[([x ])\]/);
 
     if (matches && matches.length >= 2) {
       let checked = null;
@@ -41,12 +35,10 @@ const Preview = ({
       } else if (matches[1] === ' ') {
         checked = false;
       }
+
       const replacements = matches[0].match(/(^[>\s-]*[-+*]\s\[)([x ])(\])/);
-
       const currentContentState = editorState.getCurrentContent();
-
       const blockMapArray = currentContentState.getBlockMap().toArray();
-
       const blockKey = blockMapArray[startLine - 1].getKey();
 
       // create a SelectionState encompassing the checked character
@@ -85,7 +77,9 @@ const Preview = ({
               boxId={checkboxIdCounter}
               checked
               {...props}
-            />
+            >
+              {props.children}
+            </ListItemRenderer>
           );
         },
       }}
@@ -94,8 +88,8 @@ const Preview = ({
 };
 
 Preview.propTypes = {
-  editorState: PropTypes.object.isRequired,
   editorContent: PropTypes.string.isRequired,
+  editorState: PropTypes.object.isRequired,
   updateEditor: PropTypes.func.isRequired,
 };
 
