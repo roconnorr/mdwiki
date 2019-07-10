@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Editor as DraftJsEditor } from 'draft-js';
-import SplitPane from 'react-split-pane';
 
 import './Editor.css';
-
-import Preview from '../preview/Preview';
 
 class Editor extends Component {
   constructor(props) {
@@ -22,38 +19,20 @@ class Editor extends Component {
 
   render() {
     const {
-      innerRef, onEditorClick, editorState, editorPlainText,
+      innerRef, editorState,
     } = this.props;
     return (
-      <SplitPane split="vertical" defaultSize="50%" className="SplitPane">
-        <div
-          className="EditorContainer"
-          role="presentation"
-          onClick={onEditorClick}
-          onKeyDown={onEditorClick}
-        >
-          <DraftJsEditor
-            editorState={editorState}
-            onChange={this.onEditorChange}
-            ref={innerRef}
-            textAlignment="left"
-          />
-        </div>
-        <div className="PreviewContainer">
-          <Preview
-            content={editorPlainText}
-            editorRef={innerRef}
-            editorState={editorState}
-            pushNewEditorState={this.props.pushNewEditorState}
-          />
-        </div>
-      </SplitPane>
+      <DraftJsEditor
+        editorState={editorState}
+        onChange={this.onEditorChange}
+        ref={innerRef}
+        textAlignment="left"
+      />
     );
   }
 }
 
 Editor.propTypes = {
-  onEditorClick: PropTypes.func.isRequired,
   innerRef: PropTypes.object.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorState: PropTypes.object.isRequired,

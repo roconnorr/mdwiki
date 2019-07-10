@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ContentState, EditorState } from 'draft-js';
@@ -6,6 +7,8 @@ import { ContentState, EditorState } from 'draft-js';
 import { updateEditorState } from '../../../redux/modules/editor';
 
 import Editor from '../Editor';
+
+import './EditorContainer.css';
 
 class EditorContainer extends Component {
   constructor(props) {
@@ -42,17 +45,27 @@ class EditorContainer extends Component {
     const { editorState } = this.props;
 
     return (
-      <Editor
-        ref={this.editorRef}
-        onEditorClick={this.onEditorClick}
-        onEditorChange={this.onEditorChange}
-        editorState={editorState}
-        editorPlainText={editorPlainText}
-        pushNewEditorState={this.pushNewEditorState}
-      />
+      <div
+        className="EditorContainer"
+        role="presentation"
+        onClick={this.onEditorClick}
+        onKeyDown={this.onEditorClick}
+      >
+        <Editor
+          ref={this.editorRef}
+          onEditorChange={this.onEditorChange}
+          editorState={editorState}
+          editorPlainText={editorPlainText}
+          pushNewEditorState={this.pushNewEditorState}
+        />
+      </div>
     );
   }
 }
+
+EditorContainer.propTypes = {
+  editorState: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => ({
   editorState: state.editor.editorState,

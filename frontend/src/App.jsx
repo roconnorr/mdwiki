@@ -5,7 +5,7 @@ import { ContentState, EditorState } from 'draft-js';
 import './App.css';
 
 import AppHeader from './components/appheader/AppHeader';
-import EditorContainer from './components/editor/editorcontainer/EditorContainer';
+import Workspace from './components/workspace/Workspace';
 
 class App extends Component {
   constructor(props) {
@@ -103,7 +103,7 @@ class App extends Component {
           onTitleChange={this.onTitleChange}
         />
 
-        <EditorContainer />
+        <Workspace />
       </div>
     );
   }

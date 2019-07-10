@@ -1,7 +1,11 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
-import { Modifier, SelectionState } from 'draft-js';
+import {EditorState, Modifier, SelectionState} from 'draft-js';
+
+import { updateEditorState } from '../../redux/modules/editor';
 
 import ListItemRenderer from '../elementrenderers/listitem/ListItemRenderer';
 
@@ -10,7 +14,7 @@ import './Preview.css';
 let checkboxIdCounter = 0;
 
 const Preview = ({
-  content, editorRef, editorState, pushNewEditorState,
+  content, editorContent, editorState, updateEditor,
 }) => {
   const onCheckboxClick = (event, checkboxId) => {
     const clickSourcePos = document
@@ -20,9 +24,9 @@ const Preview = ({
     const split1 = clickSourcePos.split('-');
     const startLine = split1[0].split(':')[0];
     // TODO: Refactor, use draftjs functionality throughout
-    const editorText = editorRef.current.editor.innerText;
+    // const editorText = editorRef.current.editor.innerText;
 
-    const lines = editorText.split('\n');
+    const lines = editorContent.split('\n');
 
     const line = lines[parseInt(startLine - 1, 10)];
 
@@ -59,13 +63,13 @@ const Preview = ({
         replaceWithChar,
       );
 
-      pushNewEditorState(editorState, newContentState);
+      updateEditor(EditorState.push(editorState, newContentState));
     }
   };
 
   return (
     <ReactMarkdown
-      source={content}
+      source={editorContent}
       sourcePos
       renderers={{
         link: props => (
@@ -90,8 +94,16 @@ const Preview = ({
 };
 
 Preview.propTypes = {
-  content: PropTypes.string.isRequired,
-  editorRef: PropTypes.object.isRequired,
+  editorState: PropTypes.object.isRequired,
+  editorContent: PropTypes.string.isRequired,
+  updateEditor: PropTypes.func.isRequired,
 };
 
-export default Preview;
+const mapStateToProps = state => ({
+  editorState: state.editor.editorState,
+  editorContent: state.editor.editorState.getCurrentContent().getPlainText(),
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ updateEditor: updateEditorState }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Preview);
