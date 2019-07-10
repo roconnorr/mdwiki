@@ -50,7 +50,7 @@ class Page {
     );
 
     // write page data to filesystem
-    fs.writeFile(`pages/${this.fileName}`, this.content, err => {
+    fs.writeFile(`/pages/${this.fileName}`, this.content, err => {
       if (err) {
         console.log(err);
       } else {

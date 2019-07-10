@@ -8,7 +8,7 @@ exports.page_list = async function(req, res) {
 };
 
 exports.page_detail = function(req, res) {
-  fs.readFile(`pages/${req.params.pageId}.md`, "utf8", function(err, contents) {
+  fs.readFile(`/pages/${req.params.pageId}.md`, "utf8", function(err, contents) {
     if (err) {
       res.status(400).json({ error: "FS Error, check files" + err });
     } else {
