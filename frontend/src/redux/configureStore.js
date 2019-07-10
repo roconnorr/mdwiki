@@ -9,13 +9,14 @@ import loggerMiddleware from './middleware/logger';
 
 // redux modules
 import editorReducer from './modules/editor';
-import pageReducer, { fetchPageWatcher } from './modules/page';
+import pageReducer, { fetchPageWatcher, updateSelectedPageWatcher } from './modules/page';
 
 const rootReducer = combineReducers({ editor: editorReducer, page: pageReducer });
 
 function* rootSaga() {
   yield all([
     fetchPageWatcher(),
+    updateSelectedPageWatcher(),
   ]);
 }
 

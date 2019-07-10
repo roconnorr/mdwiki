@@ -1,8 +1,12 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Alignment, Button, Navbar, Spinner, Popover, InputGroup,
 } from '@blueprintjs/core';
+
+import { updateSelectedPage } from '../../redux/modules/page';
 
 import './AppHeader.css';
 
@@ -12,16 +16,16 @@ const AppHeader = ({
   isSaving,
   pageTitle,
   pages,
-  selectedPageId,
+  selectedPage,
   onSavePage,
-  onMenuItemClicked,
+  updateSelectedPage,
   onTitleChange,
 }) => (
   <Navbar>
     <Navbar.Group align={Alignment.LEFT}>
       <Popover>
         <Button className="bp3-minimal" icon="menu" />
-        <Menu pages={pages} onMenuItemClicked={onMenuItemClicked} selectedPageId={selectedPageId} />
+        <Menu pages={pages} onMenuItemClicked={updateSelectedPage} selectedPageId={selectedPage} />
       </Popover>
       <Navbar.Divider />
       <Navbar.Heading className="app-header-name">MdWiki</Navbar.Heading>
@@ -48,4 +52,12 @@ AppHeader.propTypes = {
   onTitleChange: PropTypes.func.isRequired,
 };
 
-export default AppHeader;
+const mapStateToProps = state => ({
+  loadingPages: state.page.loading,
+  pages: state.page.pages,
+  selectedPage: state.page.selectedPage,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({ updateSelectedPage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);

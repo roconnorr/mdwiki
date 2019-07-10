@@ -1,4 +1,8 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import {
+  takeLatest, put, call, select,
+} from 'redux-saga/effects';
+
+import { updateEditorStatePlainText } from './editor';
 
 // Actions
 const FETCH_PAGES = '@page/FETCH_PAGES';
@@ -60,5 +64,15 @@ export function* fetchPageWatcher() {
     const response = yield call(fetch, 'http://localhost:8080/api/page');
     const body = yield call([response, response.json]);
     yield put(setPages(body));
+  });
+}
+
+export function* updateSelectedPageWatcher() {
+  yield takeLatest(UPDATE_SELECTED_PAGE, function* updateEditor() {
+    const selectedPageId = yield select(state => state.page.selectedPage);
+    const selectedPage = yield select(
+      state => state.page.pages.find(page => page.id === selectedPageId),
+    );
+    yield put(updateEditorStatePlainText(selectedPage.content));
   });
 }

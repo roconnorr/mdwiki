@@ -1,4 +1,4 @@
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 
 // Actions
 const UPDATE_EDITOR_STATE = '@editor/UPDATE_EDITOR_STATE';
@@ -23,5 +23,10 @@ export default function reducer(state = defaultState, action = {}) {
 
 // Action Creators
 export function updateEditorState(editorState) {
+  return { type: UPDATE_EDITOR_STATE, editorState };
+}
+
+export function updateEditorStatePlainText(text) {
+  const editorState = EditorState.createWithContent(ContentState.createFromText(text));
   return { type: UPDATE_EDITOR_STATE, editorState };
 }

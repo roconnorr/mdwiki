@@ -14,7 +14,7 @@ const Menu = ({ pages, onMenuItemClicked, selectedPageId }) => {
 
   const onClick = (e) => {
     setSelectedId(e.id);
-    onMenuItemClicked(e);
+    onMenuItemClicked(e.id);
   };
 
   const data = pages.map(page => ({
