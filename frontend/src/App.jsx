@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Toaster, Intent } from '@blueprintjs/core';
 import { ContentState, EditorState } from 'draft-js';
+
+import { fetchPages } from './redux/modules/page';
 
 import './App.css';
 
@@ -20,15 +24,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetchPages();
+    this.props.fetchPages();
   }
-
-  fetchPages = async () => {
-    const response = await fetch('http://localhost:8080/api/page');
-    const data = await response.json();
-    console.log(data);
-    this.setState({ pages: data });
-  };
 
   savePage = async () => {
     const { pageTitle } = this.state;
@@ -69,7 +66,7 @@ class App extends Component {
       }, 250);
     }
 
-    this.fetchPages();
+    // this.fetchPages();
   };
 
   onTitleChange = (e) => {
@@ -109,4 +106,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => bindActionCreators({ fetchPages }, dispatch);
+
+export default connect(null, mapDispatchToProps)(App);
