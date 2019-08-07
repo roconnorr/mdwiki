@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { updateEditorState } from '../../../redux/modules/editor';
 
-import Editor from '../Editor';
+import InternalEditor from '../InternalEditor';
 
 import './EditorContainer.css';
 
@@ -29,7 +29,7 @@ class EditorContainer extends Component {
         onClick={this.onEditorClick}
         onKeyDown={this.onEditorClick}
       >
-        <Editor
+        <InternalEditor
           ref={this.editorRef}
           updateEditor={updateEditor}
           editorState={editorState}
