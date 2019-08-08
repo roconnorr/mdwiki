@@ -1,0 +1,8 @@
+body {
+  counter-reset: section;
+}
+
+span[data-text]::before {
+  counter-increment: section;
+  content: counter(section) ".  ";
+}
