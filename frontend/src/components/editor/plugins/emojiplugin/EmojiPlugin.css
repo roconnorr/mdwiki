@@ -251,7 +251,7 @@
 }
 
 .draftJsEmojiPlugin__emojiSuggestionsEntryFocused__XDntY {
-  background-color: #e6f3ff;
+  background-color: #293742;
 }
 
 .draftJsEmojiPlugin__emojiSuggestionsEntryText__2sPjk {
@@ -272,14 +272,14 @@
   display: inline-block;
 }
 .draftJsEmojiPlugin__emojiSuggestions__2ffcV {
-  border: 1px solid #eee;
+  border: 1px solid #24313b;
   margin-top: 1.75em;
   position: absolute;
   min-width: 220px;
   max-width: 440px;
-  background: #fff;
+  background: #394b59;
   border-radius: 2px;
-  box-shadow: 0px 4px 30px 0px rgba(220,220,220,1);
+  /* box-shadow: 0px 4px 30px 0px rgba(220,220,220,1); */
   cursor: pointer;
   padding-top: 8px;
   padding-bottom: 8px;
