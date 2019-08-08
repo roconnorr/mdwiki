@@ -1,18 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Editor from 'draft-js-plugins-editor';
-import createEmojiPlugin from 'draft-js-emoji-plugin';
+
+import { emojiPlugin, EmojiSuggestions } from './plugins/emojiplugin/EmojiPlugin';
 
 import './InternalEditor.css';
-import '../../../node_modules/draft-js-emoji-plugin/lib/plugin.css';
 
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSuggestions } = emojiPlugin;
 const plugins = [emojiPlugin];
 
 class InternalEditor extends Component {
   render() {
-    const {innerRef, editorState, updateEditor} = this.props;
+    const { innerRef, editorState, updateEditor } = this.props;
     return (
       <Fragment>
         <Editor
