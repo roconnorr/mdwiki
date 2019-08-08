@@ -26,7 +26,7 @@ class InternalEditor extends Component {
   }
 }
 
-Editor.propTypes = {
+InternalEditor.propTypes = {
   innerRef: PropTypes.object.isRequired,
   editorState: PropTypes.object.isRequired,
   updateEditor: PropTypes.func.isRequired,
