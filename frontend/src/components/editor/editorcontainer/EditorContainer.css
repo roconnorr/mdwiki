@@ -1,4 +1,6 @@
 .EditorContainer {
     height: 100%;
     margin: 20px;
+    margin-left: 5px;
+    margin-top: 5px;
 }

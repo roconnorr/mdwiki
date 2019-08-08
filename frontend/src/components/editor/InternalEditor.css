@@ -4,5 +4,10 @@ body {
 
 span[data-text]::before {
   counter-increment: section;
-  content: counter(section) ".  ";
+  content: counter(section) ". ";
+  display: inline-block;
+  width: 20px;
+  border-right: 1px solid white;
+  margin-right: 10px;
+  opacity: 0.5;
 }
